@@ -8,9 +8,8 @@ services:
     command: npm start
     working_dir: /usr/src/smart-brain-api
     environment:
-      POSTGRES_URI: postgres://superbob:supersecret@postgres:5432/smart-brain-docker    
-    links:
-      - postgres
+      POSTGRES_URI: postgres://fake:fakep@postgres:5432/smart-brain-docker
+      REDIS_URI: redis://redis:6379
     ports:
       - "3000:3000"
     volumes:
@@ -20,9 +19,15 @@ services:
   postgres:
     build: ./postgres
     environment:
-      POSTGRES_USER: superbob
-      POSTGRES_PASSWORD: supersecret
+      POSTGRES_USER: fake
+      POSTGRES_PASSWORD: fakep
       POSTGRES_DB: smart-brain-docker
       POSTGRES_HOST: postgres
     ports:
       - "5432:5432"
+  
+  # Redis
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
